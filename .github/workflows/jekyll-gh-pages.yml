@@ -43,7 +43,10 @@ jobs:
     needs: build
     steps:
       - name: Report Build Status
-        run: gh api -X POST "repos/$GITHUB_REPOSITORY/pages/telemetry"
+        run: |
+            gh api -X POST "repos/$GITHUB_REPOSITORY/pages/telemetry"
+            -F github_run_id="$GITHUB_RUN_ID" \
+            -F conclusion="$CONCLUSION"
         env:
           GH_TOKEN: ${{ github.token }}
 
